@@ -1,1 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Una carta para ti</title>
 
+<style>
+
+/* Reset y body */
+body{
+margin:0;
+padding:0;
+overflow:hidden;
+font-family:Georgia, serif;
+background:#0b0b1f;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+/* Fondo de estrellas */
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+animation:starsMove 80s linear infinite;
+z-index:0;
+}
+
+@keyframes starsMove{
+from{background-position:0 0;}
+to{background-position:1000px 1000px;}
+}
+
+/* Luna */
+.moon{
+position:fixed;
+top:10%;
+right:10%;
+width:120px;
+height:120px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 30%, #fff, #ccc);
+box-shadow:0 0 40px rgba(255,255,255,0.5);
+z-index:1;
+}
+
+/* Sobre */
+.envelope{
+position:absolute;
+width:260px;
+height:160px;
+background:#d94c64;
+cursor:pointer;
+border-radius:6px;
+z-index:10;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:2em;
+color:white;
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+border-left:130px solid transparent;
+border-right:130px solid transparent;
+border-top:80px solid #ff6b81;
+transform-origin:top;
+transition:1s;
+}
+
+.envelope.open:before{
+transform:rotateX(180deg);
+}
+
+/* Carta */
+.letter{
+width:650px;
+max-width:90%;
+height:420px;
+background:white;
+border-radius:10px;
+padding:40px;
+display:none;
+position:relative;
+box-shadow:0 0 40px rgba(0,0,0,0.6);
+z-index:5;
+}
+
+/* Contenedor de scroll */
+#textContainer{
+height:100%;
+overflow:hidden;
+position:relative;
+}
+
+#scrollArea{
+height:100%;
+overflow-y:auto;
+scroll-behavior:smooth;
+color:#333;
+}
+
+.fadeTop{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:80px;
+background:linear-gradient(white, rgba(255,255,255,0));
+pointer-events:none;
+}
+
+p{
+font-size:20px;
+line-height:1.8;
+white-space:pre-line;
+}
+
+/* Pétalos */
+.petal{
+position:fixed;
+top:-50px;
+font-size:20px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+/* Corazones */
+.heart{
+position:fixed;
+bottom:-30px;
+color:#ff4d6d;
+animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="moon"></div>
+
+<audio id="music" loop>
+<source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="envelope" id="envelope">💌</div>
+
+<div class="letter" id="letter">
+
+<div id="textContainer">
+<div class="fadeTop"></div>
+<div id="scrollArea">
+<p id="text"></p>
+</div>
+</div>
+
+</div>
+
+<script>
+
+/* Mensaje */
+const message = `Mi nahi 💕 
+Hoy es un día muy especial para nosotros, porque nuestra linda historia ya está cumpliendo sus dos hermosos meses.
+
+Dos meses en los que pasamos muchas cosas, algunas fueron muy hermosas, otras veces estuvieron muy decaídas, otras negativas, pasamos por experiencias que nos hicieron alejar un poco, estar distantes, de mal humor y entre otras cosas, pero siempre pasaba algo que nos volvía a reunir y ese algo eran nuestro amor tan intenso y tan puro que sentirnos por el otro, eso era y es nuestro lazo imposible de romper, nuestro amor que crece y crece cada día más es lo que nos hace tan unidos.
+
+En estos dos meses que me permitiste estar a tú lado he aprendido muchas cosas, porque anteriormente no me esforzaba tanto por una relación, no me importaba separarme o alejarme de las personas. Pero con vos es todo muy diferente, con vos siento ese deseo, esa necesidad de estar constantemente a tú lado, conversando y riéndonos de cualquier cosa, con vos siento una obseción muy grande que nunca he sentido, con vos me nace un sentimiento de apego muy grande, cuando nos distanciabamos no podía dormir, no estaba de buen humor ni nada de eso, porque mi felicidad siempre serás vos, la razón de mi buen humor y muchos sentimientos positivos sos vos, gracias a vos he aprendido a ser una mejor persona y a dar detalles como este, ya que con vos solamente siento que soy apreciado y valorado, con vos puedo ser realmente yo, porque vos me das esa felicidad y es por eso que te amo mucho. Otra cosa que he aprendido es a ser paciente, ya que antes no mantenía la compostura en una discusión de pareja y siempre terminaba mal y nunca volvia a buscar a esa persona, pero con vos ha sido diferente, las veces que estuvimos distantes siempre quise recuperarte, buscarte incluso rogarte para no perderte porque solo con vos sentí esa necesidad de hacerlo, porque vos te volviste alguien muy especial e importante en mi vida.
+
+Quiero agradecerte también por estos dos meses en los que me tuviste paciencia, comprensión y siempre buscaste la manera de dejarme estar a tú lado, siempre pones nuestro amor por encima de todo y es por eso que podemos estar juntos luego de las cosas que pasamos. También debo agradecerte por dejarme volver con vos luego de haber terminado esa vez que luego yo te buscaba siempre y de vez en cuando cagaba esa oportunidad que me dabas con mis suposiciones (que al final una si fué verdad por lo de feeling), que también he aprendido sobre eso y ahora ya he dejado de suponer cosas sin antes preguntarte o ya simplemente no le presto atención a mis pensamientos sobre ese tema, ya que vos me generaste una confianza tan fuerte que nada ni nadie romperá. También debo agradecerte con el corazón porque luego de eso me dejaste volver a intentarlo con vos y volver a darme esa felicidad tan linda que me das vos corazón, por dejarme la oportunidad y la confianza de cambiar esas cosas que antes no notaba que te hacían mal y por eso nos habíamos separado, tengo que agradecerte porque gracias a esa oportunidad puedo demostrarte todo lo que siento por vos.
+
+Quiero volver a repetirte lo que te dije en la anterior carta, sos muy especial para mí y muy importante ya que vos me hiciste darme cuenta que sos el amor de mi vida, vos te ganaste todo mi corazón y me diste ese amor, ese cariño, esa intensidad que siempre he anhelado y que ahora la tengo porque estás vos corazón, quiero expresarte lo que dice mi corazón cuando pienso en vos y en todo lo lindo que pasamos, por estos dos meses llenos de alegría y felicidad, llenos de hermosos momentos que pasamos juntos, dos meses completos de cariño y amor puro y sincero, dos meses en los que me dejaste darte muchos regalos, mucho cariño y sobretodo mucha compañía, esa compañía que vos también me das dia a dia.
+
+Estos dos meses fueron los más hermosos y todavía nos faltan muchos días, meses, años para estar así de felices, sé que las cosas no siempre se nos dan como esperamos, hay dias que no podemos jugar o estamos muy ocupados, pero siempre buscamos el modo de compartir momentos juntos, siempre nos damos compañía cuando la necesitamos, por mas que sea a traves de una pantalla te juro que me das mucha felicidad y me das esa sensación de que estás a mi lado físicamente.
+
+También quiero expresarte lo mucho que valoro tenerte conmigo, que seas mi compañera de vida, mi novia, mi esposa, que seas la persona en la que mas puedo confiar, que seas una chica tan maravillosa y tan llena de amor para dar, agradezco mucho ser la persona a la que le entregas todo ese amor, quiero dejarte muy en claro que sos muy importante para mi, que aprecio todas las cosas que haces por y para mí, verdaderamente te amo y quiero estar toda mi vida con vos, porque vos me das esa felicidad, esa seguridad, esa compañía tan dulce que me llena de ganas de cumplir ese objetivo, llegar a viejitos juntos, quizás repita lo que te dije antes pero quiero dejarte en claro que mis sentimientos por vos son únicos y muy honestos, quiero decirte que te amo muchísimo aunque te lo diga a cada rato, quiero dejarte muy en claro lo mucho que te amo y lo importante que sos para mí, sos la mujer de mis sueños, el amor de mi vida, la mujer más maravillosa que pude conocer, haberme topado con vos y conocerte y poder compartir mi tiempo con vos es una obra que mas agradezco del destino, poder tenerte a vos es lo mas lindo de la vida.
+
+
+Otra cosa, te amo muchísimo y mi amor por vos crece mucho cada día que pasamos juntos. Quiero que sepas que sos dueña de mi corazón y de toda mi alma como así de mi ser y quiero que sepas que todas las cosas que haces por mi me demuestran que me amas muchísimo así como yo te amo a vos, quiero agradecerte por amarme tanto tanto y por ser mi novia, mi esposa, mi mujer, mi todo.
+Quiero dejarte en claro que mis sentimientos por vos son únicos y muy honestos, quiero decirte que te amo muchísimo y quiero que sepas lo importante que sos para mí, sos la mujer de mis sueños, el amor de mi vida, la mujer más maravillosa que pude conocer, complementar con vos y tener una relación es lo más lindo que me pudo pasar, gracias a vos sé lo que es sentirme verdaderamente amado y valorado, vos me das la seguridad de demostrarte todo lo que siento por vos, quiero agradecerte por enseñarme lo que es amar sin temor a nada, lo que es vivir cada día siendo tan feliz con mucha paz y tranquilidad, con mucho amor de por medio porque ambos nos amamos con mucha intensidad y gracias a eso que siento puedo estar muy seguro de que el amor verdadero existe y ese amor verdadero lo tenés vos, vos sos mi alma gemela, con vos siento muchsisisisisisisisismas cosas hermosas y quiero hacerte sentir lo mismo.
+
+Te agradezco por aparecer en mi vida, por permitirme quedarme junto a vos y tener algo hermoso, por permitirme buscarte una y otra vez, por aguantar mi manera tan intensa de amar, quiero agradecerte también por acompañarme y hacerme tan feliz, te amo mucho corazón.
+Te agradezco por quedarte siempre conmigo sabiendo que soy un tonto y muy bobo, agradezco todo lo que me das y prometo quedarme con vos toda la vida, amarte cada día más hasta el fin de mis días, hasta no poder respirar más, hasta que mi cuerpo deje de estar vivo, pero, mi alma siempre te amará cuando eso pase.
+También quiero agradecerte por toda la felicidad que me das y hacerme sentir tan amado y tan valorado, te amo tanto, amo tanto todo lo que me haces sentir y todo lo que me das día a día, te agradezco por quedarte en mi vida mi amor, te amo tanto tanto. Las palabras se quedan cortas para expresarte todo lo que te amo y todo lo que siento por vos.
+Ese día que me dijiste que me entregabas tu corazón fue el momento más hermoso que siempre atesoraré y lo llevo guardado en mi corazón, porque eso me demostró que estaba haciendo las cosas bien, te amo muchísimo mi amor hermoso 💕.
+
+Quiero agradecerte de todo corazón por haberme aceptado en tu vida, por abrirme las puertas de tu mundo y permitirme ser parte de él. Ese momento cambió mi vida para siempre, y cada día que pasa, me doy cuenta de lo afortunado que soy de tenerte a mi lado.
+Te amo más que ayer, mucho más. Sos mi razón para esforzarme y ser una mejor persona, he aprendido a ver la vida de una manera diferente, a valorar los pequeños momentos y a soñar con un futuro lleno de felicidad.
+Me encanta la manera en que siempre me haces reír, incluso en los días más difíciles. Me encanta la manera en que siempre me apoyas y me motivas a ser mejor. Me encanta la manera en que siempre me demostras todo lo que sentis con amor y cariño.
+Gracias por ser esa persona especial que cambió mi vida para siempre. Te amo hoy, mañana y en cada rincón del tiempo y el espacio.
+Quiero que sepas que siempre estaré para vos, en las buenas y en las malas, en los días soleados y en los nublados. Porque a tu lado, cualquier día se llena de color, y cualquier desafío se convierte en una oportunidad para crecer y ser mejores juntos.
+Cada momento que hemos compartido ha sido un regalo, un tesoro que atesoro en mi corazón. Cada risa, cada lágrima, cada momento que pasamos juntos, todo es un recuerdo precioso que me hace sentir afortunado de tenerte en mi vida.
+
+En este festejo de 2 meses juntos (aunque parezca poco, para mi es mucho), quiero prometerte que siempre estaré para vos, que conmigo siempre tendrás un lugar seguro para hablar conmigo de todo lo que sentís y podés estar segura de que siempre te amaré con todo mi corazón y alma. Quiero que sepas que eres la razón de mi felicidad, que eres mi todo, mi nada, mi universo entero.
+Prometo cuidarte, valorarte, amarte, compartir cada logro con vos, celebrar tus logros y acompañarte en tú vida.
+
+También quiero decirte que con tú compañía me siento muy contento, cuando charlo con vos me siento tan feliz y cuando me tratas como nene chiquito me haces tan feliz, porque generas muchas cosas hermosas en mi, pasar tiempo con vos es el mejor momento de todo el dia, cuando hablamos me das mucha felicidad a tal punto de sonreírle al celular, también te ganaste mi corazón con tú hermosa forma de ser y con tú manera de tratarme me llenas el corazón de mucha felicidad y amor. Te lo dije muchas veces pero es porque mi corazón quiere que te diga siempre que te amo, me encantas, me encanta todo lo que haces por mí y todo lo bonito que me haces sentir.
+Te amo mucho, mucho mucho con una intensidad tan fuerte que incluso podria explotar de tanto amor intenso que te tengo, estoy obsesionado con vos, completamente enamorado y embobado, sos mi felicidad, mi vida entera, mi gordita hermosa, mi bebé, sos todo eso y más para mi, sos mi todo, todo todo, te amo mucho mi amorrrr 💕
+`;
+
+let i = 0;
+
+/* Máquina de escribir con scroll */
+function typeWriter(){
+if(i < message.length){
+const text = document.getElementById("text");
+text.innerHTML += message.charAt(i);
+i++;
+
+/* scroll automático */
+const scrollArea = document.getElementById("scrollArea");
+scrollArea.scrollTop = scrollArea.scrollHeight;
+
+setTimeout(typeWriter,25);
+}
+}
+
+/* Abrir sobre */
+document.getElementById("envelope").onclick = function(){
+this.classList.add("open");
+document.getElementById("music").play();
+
+setTimeout(()=>{
+this.style.display="none";
+document.getElementById("letter").style.display="block";
+typeWriter();
+},1000);
+}
+
+/* Pétalos */
+function createPetal(){
+const petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌹";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(petal);
+setTimeout(()=>petal.remove(),10000);
+}
+setInterval(createPetal,400);
+
+/* Corazones */
+function createHeart(){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(15+Math.random()*20)+"px";
+heart.style.animationDuration=(6+Math.random()*5)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,800);
+
+</script>
+
+</body>
+</html>
